@@ -1,0 +1,171 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(RuchiRestaurantApp());
+}
+
+class RuchiRestaurantApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Ruchi Restaurant',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        scaffoldBackgroundColor: Colors.pink[50],
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<Map<String, dynamic>> quotes = [
+    {'text': 'Good food is good mood.', 'isFavorite': false},
+    {'text': 'People who love to eat are always the best people.', 'isFavorite': false},
+    {'text': 'Food brings people together on many different levels.', 'isFavorite': false},
+    {'text': 'Cooking is love made visible.', 'isFavorite': false},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ruchi Restaurant'),
+        centerTitle: true,
+      ),
+      drawer: AppDrawer(),
+      body: ListView.builder(
+        padding: EdgeInsets.all(10),
+        itemCount: quotes.length,
+        itemBuilder: (context, index) {
+          final quote = quotes[index];
+          return Card(
+            margin: EdgeInsets.symmetric(vertical: 8),
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              title: Text(quote['text']),
+              trailing: IconButton(
+                icon: Icon(
+                  quote['isFavorite'] ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.pink,
+                ),
+                onPressed: () {
+                  setState(() {
+                    quote['isFavorite'] = !quote['isFavorite'];
+                  });
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class FavoritePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Favorite Quotes'),
+        centerTitle: true,
+      ),
+      drawer: AppDrawer(),
+      body: FavoriteQuotesWidget(),
+    );
+  }
+}
+
+class FavoriteQuotesWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final favoriteQuotes = (_HomePageState().quotes)
+        .where((quote) => quote['isFavorite'] == true)
+        .toList();
+
+    if (favoriteQuotes.isEmpty) {
+      return Center(
+        child: Text(
+          'No favorite quotes yet!',
+          style: TextStyle(fontSize: 16, color: Colors.black54),
+        ),
+      );
+    }
+
+Notes = [
+
+ """
+< rest of the code e >("""
+
+Sorry, here is the complete code continuation:
+
+```dart
+      return ListView.builder(
+        padding: EdgeInsets.all(10),
+        itemCount: favoriteQuotes.length,
+        itemBuilder: (context, index) {
+          final quote = favoriteQuotes[index];
+          return Card(
+            margin: EdgeInsets.symmetric(vertical: 8),
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              title: Text(quote['text']),
+              trailing: Icon(Icons.favorite, color: Colors.pink),
+            ),
+          );
+        },
+      );
+    }
+  }
+}
+
+class AppDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: Text('Ruchi Restaurant'),
+            accountEmail: Text('Developed by: Bishworaj Poudel'),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text(
+                'R',
+                style: TextStyle(fontSize: 24, color: Colors.pink),
+              ),
+            ),
+            decoration: BoxDecoration(color: Colors.pink),
+          ),
+          ListTile(
+            leading: Icon(Icons.home, color: Colors.pink),
+            title: Text('Home'),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.favorite, color: Colors.pink),
+            title: Text('Favorites'),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => FavoritePage()),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
